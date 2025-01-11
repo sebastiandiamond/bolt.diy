@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { Authenticator } from 'remix-auth';
 import { GitHubStrategy } from 'remix-auth-github';
 import { FormStrategy } from 'remix-auth-form';
