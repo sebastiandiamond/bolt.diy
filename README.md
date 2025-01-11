@@ -311,7 +311,7 @@ Remember to always commit your local changes or stash them before pulling update
 
 ## Contributing
 
-We welcome contributions! Check out our [Contributing Guide](CONTRIBUTING.md) to get started.
+We welcome your contributions! Check out our [Contributing Guide](CONTRIBUTING.md) to get started.
 
 ---
 
