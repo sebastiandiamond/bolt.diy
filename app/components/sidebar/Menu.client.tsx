@@ -4,13 +4,20 @@ import { toast } from 'react-toastify';
 import { Dialog, DialogButton, DialogDescription, DialogRoot, DialogTitle } from '~/components/ui/Dialog';
 import { ThemeSwitch } from '~/components/ui/ThemeSwitch';
 import { SettingsWindow } from '~/components/settings/SettingsWindow';
-import { SettingsButton } from '~/components/ui/SettingsButton';
 import { db, deleteById, getAll, chatId, type ChatHistoryItem, useChatHistory } from '~/lib/persistence';
 import { cubicEasingFn } from '~/utils/easings';
 import { logger } from '~/utils/logger';
 import { HistoryItem } from './HistoryItem';
 import { binDates } from './date-binning';
 import { useSearchFilter } from '~/lib/hooks/useSearchFilter';
+import { DialogTrigger } from '@radix-ui/react-dialog';
+import PricingWindow from '../pricing/Pricing';
+import { useGetUser } from '~/lib/hooks/useGetUser';
+
+interface BillingPageResponse {
+  url?: string;
+  error?: string;
+}
 
 const menuVariants = {
   closed: {
@@ -60,7 +67,10 @@ export const Menu = () => {
   const [list, setList] = useState<ChatHistoryItem[]>([]);
   const [open, setOpen] = useState(false);
   const [dialogContent, setDialogContent] = useState<DialogContent>(null);
+  const [pricingDialog, setPricingDialog] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { filteredItems: filteredList, handleSearchChange } = useSearchFilter({
     items: list,
@@ -137,6 +147,49 @@ export const Menu = () => {
     loadEntries(); // Reload the list after duplication
   };
 
+  const handleSignOutDialog = () => {
+    setDialogOpen(!dialogOpen);
+  };
+  const { user } = useGetUser();
+
+  const handlePricingDialogOpen = () => {
+    setPricingDialog(true);
+    window.history.pushState(null, '', '/?showPricing=true');
+  };
+  const handleBillingPage = async () => {
+    setLoading(true);
+    const response = await fetch('/api/billing-page', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: user?.id }),
+    });
+
+    const data: BillingPageResponse = await response.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      console.error(data.error);
+    }
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('showPricing') === 'true') {
+      setPricingDialog(true);
+    }
+  }, []);
+
+  const getInitials = (name: string) =>
+    name
+      .split(' ')
+      .map((word) => word[0])
+      .join('')
+      .toUpperCase();
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <motion.div
       ref={menuRef}
@@ -145,13 +198,13 @@ export const Menu = () => {
       variants={menuVariants}
       className="flex selection-accent flex-col side-menu fixed top-0 w-[350px] h-full bg-bolt-elements-background-depth-2 border-r rounded-r-3xl border-bolt-elements-borderColor z-sidebar shadow-xl shadow-bolt-elements-sidebar-dropdownShadow text-sm"
     >
-      <div className="h-[60px]" /> {/* Spacer for top margin */}
+      <div className="h-[60px]" />
       <CurrentDateTime />
       <div className="flex-1 flex flex-col h-full w-full overflow-hidden">
         <div className="p-4 select-none">
           <a
             href="/"
-            className="flex gap-2 items-center bg-bolt-elements-sidebar-buttonBackgroundDefault text-bolt-elements-sidebar-buttonText hover:bg-bolt-elements-sidebar-buttonBackgroundHover rounded-md p-2 transition-theme mb-4"
+            className="flex gap-2 items-center bg-bolt-elements-sidebar-c text-bolt-elements-sidebar-buttonText hover:bg-bolt-elements-sidebar-buttonBackgroundHover rounded-md p-2 transition-theme mb-4"
           >
             <span className="inline-block i-bolt:chat scale-110" />
             Start new chat
@@ -221,12 +274,86 @@ export const Menu = () => {
             </Dialog>
           </DialogRoot>
         </div>
+        <div className="dark:bg-black bg-white p-4 flex flex-col gap-2">
+          <div
+            className="flex items-center gap-2 text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive cursor-pointer p-2 rounded-md"
+            onClick={() => setIsSettingsOpen(true)}
+          >
+            <span className="i-ph:gear text-xl" />
+            <p className="text-bolt-elements-textPrimary text-sm font-medium">Settings</p>
+          </div>
+
+          <div
+            className="flex items-center gap-2 text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive cursor-pointer p-2 rounded-md relative"
+            onClick={user?.subscription ? handleBillingPage : handlePricingDialogOpen}
+          >
+            <span className="i-ph:credit-card text-xl" />
+            <p className="text-bolt-elements-textPrimary text-sm font-medium">My Subscription</p>
+            {loading && <span className="absolute right-2 h-full  i-svg-spinners:90-ring-with-bg size-4"></span>}
+          </div>
+          <DialogRoot open={dialogOpen}>
+            <DialogTrigger asChild>
+              <div
+                className="flex items-center gap-2 text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive cursor-pointer p-2 rounded-md"
+                onClick={handleSignOutDialog}
+              >
+                <span className="i-ph:sign-out text-xl" />
+                <p className="text-bolt-elements-textPrimary text-sm font-medium">Sign out</p>
+              </div>
+            </DialogTrigger>
+            <Dialog onBackdrop={handleSignOutDialog} onClose={handleSignOutDialog}>
+              <DialogTitle>Log Out</DialogTitle>
+              <DialogDescription>Are you sure you want to sign out?</DialogDescription>
+              <div className="px-5 pb-4 bg-bolt-elements-background-depth-2 flex gap-2 justify-end">
+                <DialogButton type="secondary" onClick={handleSignOutDialog}>
+                  Cancel
+                </DialogButton>
+                <form method="post" action="/logout">
+                  <DialogButton type="primary">Sign out</DialogButton>
+                </form>
+              </div>
+            </Dialog>
+          </DialogRoot>
+        </div>
         <div className="flex items-center justify-between border-t border-bolt-elements-borderColor p-4">
-          <SettingsButton onClick={() => setIsSettingsOpen(true)} />
+          {/* */}
+
+          <div className="flex items-center gap-3">
+            {user?.githubId ? (
+              <div>
+                <img
+                  src={`https://avatars.githubusercontent.com/u/${user?.githubId}?v=4`}
+                  alt="avatar"
+                  className="rounded-full w-8 h-8 cursor-default"
+                />
+              </div>
+            ) : user?.googleId ? (
+              <div>
+                <img src={`${user.avatar}`} alt="avatar" className="rounded-full w-8 h-8 cursor-default" />
+              </div>
+            ) : (
+              <div>
+                <div
+                  className="flex items-center justify-center w-8 h-8 text-white rounded-full text-base "
+                  style={{ background: `${user.avatar}` }}
+                >
+                  <span className="mb-[1px]">{getInitials(user.name)}</span>
+                </div>
+              </div>
+            )}
+
+            <div>
+              <p className="text-bolt-elements-textPrimary text-sm font-medium">{user?.name}</p>
+              <p className="text-bolt-elements-textSecondary text-sm font-regular capitalize">
+                {user?.subscription?.planType ? user?.subscription?.planType : 'Personal'} Plan
+              </p>
+            </div>
+          </div>
           <ThemeSwitch />
         </div>
       </div>
       <SettingsWindow open={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+      <PricingWindow pricingDialog={pricingDialog} setPricingDialog={setPricingDialog} />
     </motion.div>
   );
 };
