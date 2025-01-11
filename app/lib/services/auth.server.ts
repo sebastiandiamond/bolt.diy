@@ -44,9 +44,9 @@ authenticator.use(
 authenticator.use(
   new GitHubStrategy(
     {
-      clientId: 'Iv23lihykFEzfYwD1ATZ',
-      clientSecret: '7fa56ccce1b8f55403dc1b84ba45732f42982f42',
-      redirectURI: 'http://localhost:5173/auth/github/callback',
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      redirectURI: process.env.GOOGLE_CALLBACK_URL!,
       scopes: ['user:email'],
     },
     async ({ tokens }) => {
