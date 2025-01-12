@@ -32,7 +32,7 @@ function parseCookies(cookieHeader: string): Record<string, string> {
 }
 
 async function chatAction({ context, request }: ActionFunctionArgs) {
-  const env = context?.cloudflare?.env || process.env;
+  const env = context?.cloudflare?.env || null;
   if (!env) {
     throw new Error('Invalid context: Missing environment configuration');
   }
