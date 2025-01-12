@@ -148,6 +148,7 @@ export const ChatImpl = memo(
       sendExtraMessageFields: true,
       onError: (error) => {
         logger.error('Request failed\n\n', error);
+        console.log('error', error);
         toast.error(
           'There was an error processing your request: ' + (error.message ? error.message : 'No details were returned'),
         );
