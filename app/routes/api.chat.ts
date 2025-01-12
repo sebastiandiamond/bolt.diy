@@ -32,6 +32,10 @@ function parseCookies(cookieHeader: string): Record<string, string> {
 }
 
 async function chatAction({ context, request }: ActionFunctionArgs) {
+  const env = context?.cloudflare?.env || process.env;
+  if (!env) {
+    throw new Error('Invalid context: Missing environment configuration');
+  }
   const { messages, files, promptId, contextOptimization } = await request.json<{
     messages: Messages;
     files: any;
@@ -108,7 +112,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
 
         const result = await streamText({
           messages,
-          env: context.cloudflare.env,
+          env,
           options,
           apiKeys,
           files,
@@ -125,7 +129,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
 
     const result = await streamText({
       messages,
-      env: context.cloudflare.env,
+      env,
       options,
       apiKeys,
       files,

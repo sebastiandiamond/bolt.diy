@@ -50,7 +50,7 @@ authenticator.use(
       redirectURI: 'http://localhost:5173/auth/github/callback',
       scopes: ['user:email'],
     },
-    async ({ tokens }) => {
+    async ({ tokens }: { tokens: any }) => {
       const { access_token } = tokens.data as { access_token: string };
       const githubProfile = await fetchGitHubProfile(access_token);
       const { id, login, email, name } = githubProfile as {
