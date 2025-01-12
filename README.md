@@ -90,7 +90,7 @@ bolt.diy was originally started by [Cole Medin](https://www.youtube.com/@ColeMed
 
 If you're new to installing software from GitHub, don't worry! If you encounter any issues, feel free to submit an "issue" using the provided links or improve this documentation by forking the repository, editing the instructions, and submitting a pull request. The following instruction will help you get the stable branch up and running on your local machine in no time.  
 
-Let's get you up and running with the stable version of Bolt.DIY!
+Let's get you up and running with the stable version of Bolt.DIY
 
 ## Quick Download
 
