@@ -1,4 +1,4 @@
-import { type ActionFunctionArgs } from '@remix-run/cloudflare';
+import { type ActionFunctionArgs, type LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { createDataStream } from 'ai';
 import { MAX_RESPONSE_SEGMENTS, MAX_TOKENS } from '~/lib/.server/llm/constants';
 import { CONTINUE_PROMPT } from '~/lib/common/prompts/prompts';
@@ -112,7 +112,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
 
         const result = await streamText({
           messages,
-          env,
+          env: process.env as unknown as Env,
           options,
           apiKeys,
           files,
@@ -122,14 +122,14 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
         });
 
         stream.switchSource(result.toDataStream());
-
+        console.log('result', result);
         return;
       },
     };
 
     const result = await streamText({
       messages,
-      env,
+      env: process.env as unknown as Env,
       options,
       apiKeys,
       files,
@@ -139,7 +139,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
     });
 
     stream.switchSource(result.toDataStream());
-
+    console.log('result', result);
     return new Response(stream.readable, {
       status: 200,
       headers: {
