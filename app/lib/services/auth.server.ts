@@ -1,13 +1,14 @@
+import 'dotenv/config';
 import { Authenticator } from 'remix-auth';
 import { GitHubStrategy } from 'remix-auth-github';
 import { FormStrategy } from 'remix-auth-form';
-import type { FormInputs, LoginFormInputs } from '~/types/auth';
 import { fetchGitHubProfile } from '~/utils/fetchGitHubProfile';
 import { OAuth2Strategy } from 'remix-auth-oauth2';
 import { SignUpValidation } from '~/utils/sign-up-validation';
 import { SignInValidation } from '~/utils/sign-in-validation';
 import { fetchGoogleProfile } from '~/utils/fetchGoogleProfile';
 import 'dotenv/config';
+import type { FormInputs, LoginFormInputs } from '~/types/auth';
 
 export let authenticator = new Authenticator<any>();
 
@@ -45,11 +46,11 @@ authenticator.use(
   new GitHubStrategy(
     {
       clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-      redirectURI: process.env.GITHUB_CALLBACK_URL!,
+      clientSecret: '7fa56ccce1b8f55403dc1b84ba45732f42982f42',
+      redirectURI: 'http://localhost:5173/auth/github/callback',
       scopes: ['user:email'],
     },
-    async ({ tokens }) => {
+    async ({ tokens }: { tokens: any }) => {
       const { access_token } = tokens.data as { access_token: string };
       const githubProfile = await fetchGitHubProfile(access_token);
       const { id, login, email, name } = githubProfile as {

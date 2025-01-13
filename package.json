@@ -8,7 +8,7 @@
   "version": "0.0.5",
   "scripts": {
     "deploy": "npm run build && wrangler pages deploy",
-    "build": "prisma generate && remix vite:build",
+    "build": "prisma generate && prisma migrate deploy && remix vite:build",
     "dev": "node pre-start.cjs  && remix vite:dev",
     "test": "vitest --run",
     "test:watch": "vitest",
@@ -24,7 +24,8 @@
     "typecheck": "tsc",
     "typegen": "wrangler types",
     "preview": "pnpm run build && pnpm run start",
-    "prepare": "husky"
+    "prepare": "husky",
+    "vercel-build": "prisma generate && prisma migrate deploy && remix vite:build"
   },
   "engines": {
     "node": ">=18.18.0"

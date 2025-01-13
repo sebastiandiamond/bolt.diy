@@ -5,9 +5,9 @@ Welcome to bolt.diy, the official open source version of Bolt.new (previously kn
 
 Check the [bolt.diy Docs](https://stackblitz-labs.github.io/bolt.diy/) for more information. 
 
-We have also launched an experimental agent called the "bolt.diy Expert" that can answer common questions about bolt.diy. Find it here on the [oTTomator Live Agent Studio](https://studio.ottomator.ai/).
+We have also launched an experimental agent called the "bolt.diy Expert" that can answer common questions about bolt.diy. Find it here on the [oTTomator Live Agent Studio](https://studio.ottomator.ai/)
 
-bolt.diy was originally started by [Cole Medin](https://www.youtube.com/@ColeMedin) but has quickly grown into a massive community effort to build the BEST open source AI coding assistant!
+bolt.diy was originally started by [Cole Medin](https://www.youtube.com/@ColeMedin) but has quickly grown into a massive community effort to build the BEST open source AI coding assistant
 
 ## Table of Contents
 
@@ -90,7 +90,7 @@ bolt.diy was originally started by [Cole Medin](https://www.youtube.com/@ColeMed
 
 If you're new to installing software from GitHub, don't worry! If you encounter any issues, feel free to submit an "issue" using the provided links or improve this documentation by forking the repository, editing the instructions, and submitting a pull request. The following instruction will help you get the stable branch up and running on your local machine in no time.  
 
-Let's get you up and running with the stable version of Bolt.DIY!
+Let's get you up and running with the stable version of Bolt.DIY
 
 ## Quick Download
 
@@ -311,7 +311,7 @@ Remember to always commit your local changes or stash them before pulling update
 
 ## Contributing
 
-We welcome contributions! Check out our [Contributing Guide](CONTRIBUTING.md) to get started.
+We welcome your contributions! Check out our [Contributing Guide](CONTRIBUTING.md) to get started.
 
 ---
 
