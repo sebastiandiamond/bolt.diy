@@ -5,7 +5,6 @@ pages_build_output_dir = "./build/client"
 send_metrics = false
 
 [vars]
-[vars]
 GITHUB_CLIENT_ID = "Iv23lihykFEzfYwD1ATZ"
 GITHUB_CLIENT_SECRET = "7fa56ccce1b8f55403dc1b84ba45732f42982f42"
 GITHUB_CALLBACK_URL = "http://localhost:5173/auth/github/callback"
