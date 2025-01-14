@@ -1,5 +1,5 @@
 import { stripe } from '~/lib/services/stripe.server'; // Adjust the import path as needed
-import { createOrUpdateSubscription } from '~/actions/subscription';
+
 import type { ClientActionFunctionArgs } from '@remix-run/react';
 import type Stripe from 'stripe';
 
@@ -37,15 +37,21 @@ export const action = async ({ request }: ClientActionFunctionArgs) => {
           return Response.json({ error: 'Invalid session data' }, { status: 400 });
         }
 
-        await createOrUpdateSubscription({
-          providerSubscriptionId: subscriptionId as any,
-          userId,
-          planType: 'basic', // Replace with your logic to determine plan type
-          status: 'active', // Default to active; adjust based on your logic
-          quantity,
-          currentPeriodStart: new Date(),
-          currentPeriodEnd: new Date(new Date().setDate(new Date().getDate() + 30)), // Example: 30 days
-          priceId: priceId || null,
+        await fetch(`${process.env.VITE_API_URL}/subscription`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            providerSubscriptionId: subscriptionId as any,
+            userId,
+            planType: 'basic', // Replace with your logic to determine plan type
+            status: 'active', // Default to active; adjust based on your logic
+            quantity,
+            currentPeriodStart: new Date(),
+            currentPeriodEnd: new Date(new Date().setDate(new Date().getDate() + 30)), // Example: 30 days
+            priceId: priceId || null,
+          }),
         });
 
         break;

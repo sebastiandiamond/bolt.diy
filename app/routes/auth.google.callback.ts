@@ -1,6 +1,5 @@
 import type { LoaderFunction } from '@remix-run/cloudflare';
 import { redirect } from '@remix-run/react';
-import { createUser } from '~/actions/user';
 import { authenticator } from '~/lib/services/auth.server';
 
 type GoogleUser = {
@@ -13,18 +12,11 @@ type GoogleUser = {
 export let loader: LoaderFunction = async ({ request }) => {
   const resp = await authenticator.authenticate('google', request);
 
-  const newUser: GoogleUser = {
-    sub: resp.sub as string,
+  const newUserPayload = {
     email: resp.email as string,
     name: resp.name as string,
-    picture: resp.picture as string,
-  };
-
-  const user = await createUser({
-    email: newUser.email as string,
-    name: newUser.name as string,
-    avatar: newUser.picture as string,
-    googleId: newUser.sub,
+    avatar: resp.picture as string,
+    googleId: resp.sub as string,
     id: '',
     githubId: null,
     password: null,
@@ -32,7 +24,21 @@ export let loader: LoaderFunction = async ({ request }) => {
     subscriptionId: null,
     createdAt: new Date(),
     updatedAt: new Date(),
+  };
+
+  const response = await fetch(`${process.env.VITE_API_URL}/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newUserPayload),
   });
 
+  if (!response.ok) {
+    // Handle error response
+    throw new Error('Failed to create user');
+  }
+
+  const user: any = await response.json();
   return redirect(`/?userId=${user.id}`);
 };

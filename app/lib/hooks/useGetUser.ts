@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+const API_URL = import.meta.env.VITE_API_URL;
 export function useGetUser() {
   const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
   const [user, setUser] = useState<User | null>(null);
@@ -10,11 +10,12 @@ export function useGetUser() {
     async function fetchUser() {
       setLoading(true);
       try {
-        const response = await fetch(`/api/getUser/${userId}`);
+        const response = await fetch(`${API_URL}/users/${userId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch user');
         }
         const data: User = await response.json();
+        console.log(data);
         setUser(data);
       } catch (error) {
         setError((error as Error).message);

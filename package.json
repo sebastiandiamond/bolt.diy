@@ -8,7 +8,7 @@
   "version": "0.0.5",
   "scripts": {
     "deploy": "npm run build && wrangler pages deploy",
-    "build": "prisma generate && prisma migrate deploy && remix vite:build",
+    "build": "deploy && remix vite:build",
     "dev": "node pre-start.cjs  && remix vite:dev",
     "test": "vitest --run",
     "test:watch": "vitest",
@@ -25,7 +25,7 @@
     "typegen": "wrangler types",
     "preview": "pnpm run build && pnpm run start",
     "prepare": "husky",
-    "vercel-build": "prisma generate && prisma migrate deploy && remix vite:build"
+    "vercel-build": "remix vite:build"
   },
   "engines": {
     "node": ">=18.18.0"
@@ -113,7 +113,6 @@
     "remix-island": "^0.2.0",
     "remix-utils": "^7.7.0",
     "shiki": "^1.24.0",
-    "stripe": "^17.5.0",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {

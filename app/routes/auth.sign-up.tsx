@@ -3,7 +3,6 @@ import { getSession } from '~/lib/services/session.server';
 import { authenticator } from '~/lib/services/auth.server';
 import Input from '~/components/ui/input';
 import type { FormInputs } from '~/types/auth';
-import { createUser } from '~/actions/user';
 import { getRandomGradient } from '~/utils/getRandomGradient';
 import AuthButton from '~/components/ui/AuthButton';
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare';
@@ -21,7 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (resp.email.error || resp.username.error || resp.password?.error || resp.confirmPassword?.error) {
     return resp;
   } else {
-    const user = await createUser({
+    const userPayload = {
       email: resp.email.value as string,
       name: resp.username.value as string,
       password: resp.password.value,
@@ -33,7 +32,22 @@ export const action: ActionFunction = async ({ request }) => {
       customerIs: null,
       createdAt: new Date(),
       updatedAt: new Date(),
+    };
+
+    const response = await fetch(`${process.env.VITE_API_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userPayload),
     });
+
+    if (!response.ok) {
+      // Handle error response
+      return { error: 'Failed to create user' };
+    }
+
+    const user: any = await response.json();
     return redirect(`/?userId=${user.id}`);
   }
 };

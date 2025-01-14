@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { getCustomerByUserId, saveStripeCustomerId } from '~/actions/user';
+
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-12-18.acacia',
@@ -12,8 +12,20 @@ export const action = async ({ request }: { request: Request }) => {
   if (!priceId || !userId) {
     return Response.json({ error: 'Missing price ID' }, { status: 400 });
   }
-  let customer = await getCustomerByUserId(userId); // Replace with your logic to fetch the Stripe customer
 
+  // Fetch the customer from your backend
+  let customer: any;
+  try {
+    const customerResponse = await fetch(`${process.env.VITE_API_URL}/users/${userId}/customer`);
+    if (!customerResponse.ok) {
+      throw new Error('Failed to fetch customer');
+    }
+    customer = await customerResponse.json();
+  } catch (err: any) {
+    console.error(`Error fetching customer: ${err.message}`);
+    return Response.json({ error: 'Unable to fetch customer' }, { status: 500 });
+  }
+  console.log(customer);
   if (!customer?.customerIs) {
     try {
       // Create a new Stripe customer if none exists
@@ -22,13 +34,22 @@ export const action = async ({ request }: { request: Request }) => {
           user_id: userId, // Attach your user ID for tracking
         },
       });
+      console.log(newCustomer);
+      // Save the new customer ID in your backend
+      const saveResponse = await fetch(`${process.env.VITE_API_URL}/users/${userId}/customer`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ stripeCustomerId: newCustomer.id }),
+      });
 
-      // Save the new customer ID in your database
-      customer = await saveStripeCustomerId(userId, newCustomer.id);
-
-      if (!customer) {
+      if (!saveResponse.ok) {
         throw new Error('Failed to save Stripe customer ID');
       }
+
+      customer = await saveResponse.json();
+      console.log(customer);
     } catch (err: any) {
       console.error(`Error creating Stripe customer: ${err.message}`);
       return Response.json({ error: 'Unable to create Stripe customer' }, { status: 500 });

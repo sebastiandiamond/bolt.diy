@@ -1,5 +1,4 @@
 import { data, Form, Link, redirect, useActionData, type MetaFunction } from '@remix-run/react';
-import db from '~/actions/prisma';
 import Input from '~/components/ui/input';
 import { authenticator } from '~/lib/services/auth.server';
 import type { LoginFormInputs } from '~/types/auth';
@@ -7,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { getSession } from '~/lib/services/session.server';
 import AuthButton from '~/components/ui/AuthButton';
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare';
+import fetch from 'node-fetch';
 
 export const meta: MetaFunction = () => {
   return [
@@ -21,11 +21,13 @@ export const action: ActionFunction = async ({ request }) => {
   if (resp.email_username.error || resp.password?.error) {
     return resp;
   } else {
-    const user = await db.user.findFirst({
-      where: {
-        OR: [{ email: resp.email_username.value }, { name: resp.email_username.value }],
-      },
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/users?emailOrName=${encodeURIComponent(resp.email_username.value)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
     });
+    const user: any = await response.json();
 
     if (user && (await bcrypt.compare(resp.password.value, user.password || ''))) {
       return redirect(`/?userId=${user.id}`);

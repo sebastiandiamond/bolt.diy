@@ -1,26 +1,35 @@
-import db from '~/actions/prisma';
+
 import type { FormInputs } from '~/types/auth';
 
 export async function SignUpValidation(inputs: FormInputs) {
+  console.log(inputs);
   if (!inputs.email.value) {
     inputs.email.error = 'Email is required';
   } else {
-    const existingEmail = await db.user.findUnique({
-      where: { email: inputs.email.value },
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/users/check-email?email=${encodeURIComponent(inputs.email.value)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
-
-    if (existingEmail) {
+    const user: any = await response.json();
+    console.log(user);
+    if (!user.error) {
       inputs.email.error = 'Email already exists';
     }
   }
   if (!inputs.username.value) {
     inputs.username.error = 'Username is required';
   } else {
-    const existingUsername = await db.user.findUnique({
-      where: { name: inputs.username.value },
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/users/check-username?name=${encodeURIComponent(inputs.username.value)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
+    const user: any = await response.json();
 
-    if (existingUsername) {
+    if (!user.error) {
       inputs.username.error = 'Username already exists';
     }
   }
