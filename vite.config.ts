@@ -24,6 +24,9 @@ export default defineConfig((config) => {
     },
     build: {
       target: 'esnext',
+      rollupOptions: {
+        external: ['stripe'], // Mark 'stripe' as an external dependency
+      },
     },
 
     plugins: [
