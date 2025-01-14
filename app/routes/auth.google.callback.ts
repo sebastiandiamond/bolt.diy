@@ -26,7 +26,7 @@ export let loader: LoaderFunction = async ({ request }) => {
     updatedAt: new Date(),
   };
 
-  const response = await fetch(`${process.env.VITE_API_URL}/users`, {
+  const response = await fetch(`https://bolt-api-o83q.onrender.com/api/v1/users`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

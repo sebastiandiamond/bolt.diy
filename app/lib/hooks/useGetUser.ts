@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-const API_URL = import.meta.env.VITE_API_URL;
+
 export function useGetUser() {
   const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
   const [user, setUser] = useState<User | null>(null);
@@ -10,7 +10,7 @@ export function useGetUser() {
     async function fetchUser() {
       setLoading(true);
       try {
-        const response = await fetch(`${API_URL}/users/${userId}`);
+        const response = await fetch(`https://bolt-api-o83q.onrender.com/api/v1/users/${userId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch user');
         }

@@ -21,7 +21,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (resp.email_username.error || resp.password?.error) {
     return resp;
   } else {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/users?emailOrName=${encodeURIComponent(resp.email_username.value)}`, {
+    const response = await fetch(`https://bolt-api-o83q.onrender.com/api/v1/users?emailOrName=${encodeURIComponent(resp.email_username.value)}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

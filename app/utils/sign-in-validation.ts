@@ -5,7 +5,7 @@ export async function SignInValidation(inputs: LoginFormInputs) {
     inputs.email_username.error = 'email_username is required';
   } else {
     const emailOrUsername = inputs.email_username.value;
-    const emailResponse = await fetch(`${import.meta.env.VITE_API_URL}/users/check-email?email=${encodeURIComponent(emailOrUsername)}`, {
+    const emailResponse = await fetch(`https://bolt-api-o83q.onrender.com/api/v1/users/check-email?email=${encodeURIComponent(emailOrUsername)}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ export async function SignInValidation(inputs: LoginFormInputs) {
     });
     const emailUser: any = await emailResponse.json();
 
-    const usernameResponse = await fetch(`${import.meta.env.VITE_API_URL}/users/check-username?name=${encodeURIComponent(emailOrUsername)}`, {
+    const usernameResponse = await fetch(`https://bolt-api-o83q.onrender.com/api/v1/users/check-username?name=${encodeURIComponent(emailOrUsername)}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
