@@ -45,10 +45,10 @@ authenticator.use(
 authenticator.use(
   new GitHubStrategy(
     {
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: '7fa56ccce1b8f55403dc1b84ba45732f42982f42',
-      redirectURI: 'http://localhost:5173/auth/github/callback',
-      scopes: ['user:email'],
+      clientId: "Iv23lihykFEzfYwD1ATZ",
+      clientSecret: "7fa56ccce1b8f55403dc1b84ba45732f42982f42",
+      redirectURI: "http://localhost:5173/auth/github/callback",
+      scopes: ["user:email"],
     },
     async ({ tokens }: { tokens: any }) => {
       const { access_token } = tokens.data as { access_token: string };
@@ -68,9 +68,9 @@ authenticator.use(
 authenticator.use(
   new OAuth2Strategy(
     {
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      redirectURI: process.env.GOOGLE_CALLBACK_URL!,
+      clientId: "136077617825-a107rmc1iu6f52gcbi6auvhbkkp2a53v.apps.googleusercontent.com",
+      clientSecret: "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",
+      redirectURI: "http://localhost:5173/auth/google/callback",
       authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
       tokenEndpoint: 'https://oauth2.googleapis.com/token',
       scopes: ['openid', 'email', 'profile'],
