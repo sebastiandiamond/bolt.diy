@@ -2,7 +2,7 @@ import { data, Form, Link, redirect, useActionData, type MetaFunction } from '@r
 import Input from '~/components/ui/input';
 import { authenticator } from '~/lib/services/auth.server';
 import type { LoginFormInputs } from '~/types/auth';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { getSession } from '~/lib/services/session.server';
 import AuthButton from '~/components/ui/AuthButton';
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare';
