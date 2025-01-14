@@ -47,7 +47,7 @@ authenticator.use(
     {
       clientId: "Iv23lib2acMSyJRGKswz",
       clientSecret: "753ea273f11b88e48a372b93f253875dfe773cef",
-      redirectURI: "http://localhost:5173/auth/github/callback",
+      redirectURI: "https://bolt-diy-d74.pages.dev/auth/github/callback",
       scopes: ["user:email"],
     },
     async ({ tokens }: { tokens: any }) => {
