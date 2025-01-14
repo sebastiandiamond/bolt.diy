@@ -24,10 +24,6 @@ export default defineConfig((config) => {
     },
     build: {
       target: 'esnext',
-      rollupOptions: {
-        external: [
-        ],
-      },
     },
 
     plugins: [
