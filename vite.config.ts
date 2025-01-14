@@ -26,15 +26,13 @@ export default defineConfig((config) => {
       target: 'esnext',
       rollupOptions: {
         external: [
-          'fs',     // Exclude Node.js built-in module
-          'path',   // Exclude Node.js built-in module
         ],
       },
     },
 
     plugins: [
       nodePolyfills({
-        include: ['buffer'], // Only include required polyfills
+        include: ['buffer', 'fs', 'path'], // Only include required polyfills
       }),
       config.mode !== 'test' && remixCloudflareDevProxy(),
       remixVitePlugin({
