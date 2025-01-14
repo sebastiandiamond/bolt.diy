@@ -46,7 +46,7 @@ authenticator.use(
   new GitHubStrategy(
     {
       clientId: "Iv23lib2acMSyJRGKswz",
-      clientSecret: "753ea273f11b88e48a372b93f253875dfe773cef",
+      clientSecret: "9bf28642a5c7029420f17eff8bc5f73dd43b401d",
       redirectURI: "https://bolt-diy-d74.pages.dev/auth/github/callback",
       scopes: ["user:email"],
     },
