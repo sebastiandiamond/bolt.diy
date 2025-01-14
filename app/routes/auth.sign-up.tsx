@@ -33,7 +33,7 @@ export const action: ActionFunction = async ({ request }) => {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-
+    console.log(userPayload);
     const response = await fetch(`https://bolt-api-o83q.onrender.com/api/v1/users`, {
       method: 'POST',
       headers: {
@@ -41,7 +41,7 @@ export const action: ActionFunction = async ({ request }) => {
       },
       body: JSON.stringify(userPayload),
     });
-
+    console.log(response);
     if (!response.ok) {
       // Handle error response
       return { error: 'Failed to create user' };

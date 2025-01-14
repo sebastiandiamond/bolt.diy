@@ -12,6 +12,7 @@ export async function SignUpValidation(inputs: FormInputs) {
         'Content-Type': 'application/json',
       },
     });
+    console.log(response);
     const user: any = await response.json();
     console.log(user);
     if (!user.error) {
@@ -27,6 +28,7 @@ export async function SignUpValidation(inputs: FormInputs) {
         'Content-Type': 'application/json',
       },
     });
+    console.log(response);
     const user: any = await response.json();
 
     if (!user.error) {
