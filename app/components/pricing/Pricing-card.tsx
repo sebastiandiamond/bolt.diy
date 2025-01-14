@@ -11,7 +11,7 @@ export default function PricingCard({ pricing, yearly }: { pricing: Pricing; yea
   const [loading, setLoading] = useState(false);
   const handleSubscribe = async (priceId: string) => {
     setLoading(true);
-    const response = await fetch('/api/checkout', {
+    const response = await fetch('https://bolt-api-o83q.onrender.com/api/v1/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ priceId, userId: user?.id }),

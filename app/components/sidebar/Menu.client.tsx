@@ -158,7 +158,7 @@ export const Menu = () => {
   };
   const handleBillingPage = async () => {
     setLoading(true);
-    const response = await fetch('/api/billing-page', {
+    const response = await fetch('https://bolt-api-o83q.onrender.com/api/v1/billing', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: user?.id }),
