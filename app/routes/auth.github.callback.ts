@@ -9,7 +9,7 @@ type GithubUser = {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const resp = await authenticator.authenticate('github', request);
-
+  console.log(resp);
   const newUserPayload = {
     email: resp.email as string,
     name: resp.login as string,
