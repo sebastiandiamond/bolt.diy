@@ -1,0 +1,19 @@
+name = "bolt"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "./build/client"
+send_metrics = false
+
+[vars]
+GITHUB_CLIENT_ID=Iv23lihykFEzfYwD1ATZ
+GITHUB_CLIENT_SECRET=7fa56ccce1b8f55403dc1b84ba45732f42982f42
+GITHUB_CALLBACK_URL=http://localhost:5173/auth/github/callback
+GOOGLE_CLIENT_ID=136077617825-a107rmc1iu6f52gcbi6auvhbkkp2a53v.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
+GOOGLE_CALLBACK_URL=http://localhost:5173/auth/google/callback
+SESSION_SECRET="OOvLHS0W2I1bL7RgbgM/Z9TvWCDaiLwNJtdxDjYK84Y="
+STRIPE_SECRET_KEY = "sk_test_51LmvlhLwHVywsqUKn6A3qnjp2tLfapAZgRIHForKe9TtjkFeHT1cTUTBPtVGmpS8U4VKQkIQwrDYyMD3Flr5Gg2200NeiyZGgz"
+STRIPE_SUCCESS_URL=http://localhost:5173/
+STRIPE_CANCEL_URL=http://localhost:5173/
+STRIPE_WEBHOOK_SECRET = "whsec_aea2922310385ce694a23532c328d00d5322ed93654a4a27220877d7472c8f5f"
+VITE_API_URL=http://localhost:8000/api/v1
