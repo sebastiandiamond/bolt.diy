@@ -25,13 +25,16 @@ export default defineConfig((config) => {
     build: {
       target: 'esnext',
       rollupOptions: {
-        external: ['stripe', 'fs', 'path'], // Mark 'stripe' as an external dependency
+        external: [
+          'fs',     // Exclude Node.js built-in module
+          'path',   // Exclude Node.js built-in module
+        ],
       },
     },
 
     plugins: [
       nodePolyfills({
-        include: ['path', 'buffer'],
+        include: ['buffer'], // Only include required polyfills
       }),
       config.mode !== 'test' && remixCloudflareDevProxy(),
       remixVitePlugin({
