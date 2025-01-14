@@ -29,7 +29,7 @@ export const action = async ({ request }: ClientActionFunctionArgs) => {
       });
 
       // Save the new customer ID in your database
-      const saveResponse = await fetch(`${process.env.VITE_API_URL}/users/${userId}/customer`, {
+      const saveResponse = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}/customer`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export const action = async ({ request }: ClientActionFunctionArgs) => {
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: customer.customerIs as string,
 
-      return_url: process.env.BILLING_RETURN_URL || 'http://localhost:5173', // Replace with your desired return URL
+      return_url: import.meta.env.BILLING_RETURN_URL || 'http://localhost:5173', // Replace with your desired return URL
     });
 
     // Respond with the portal URL
