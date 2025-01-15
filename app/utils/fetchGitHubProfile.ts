@@ -8,7 +8,11 @@ export async function fetchGitHubProfile(accessToken: string) {
       'X-GitHub-Api-Version': '2022-11-28',
     },
   });
-  logger.info(`GitHub profile response: ${response.json()}`);
+  const data = await response.json();
+
+  logger.info(`GitHub profile response: ${data}`);
+  logger.info(`GitHub profile response status: ${response.status}`);
+  logger.info(`GitHub profile response status text: ${response.ok}`);
   if (response.status !== 200) {
     throw new Error('Failed to fetch GitHub profile');
   }
