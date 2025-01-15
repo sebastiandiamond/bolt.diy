@@ -9,6 +9,7 @@ import { SignInValidation } from '~/utils/sign-in-validation';
 import { fetchGoogleProfile } from '~/utils/fetchGoogleProfile';
 import 'dotenv/config';
 import type { FormInputs, LoginFormInputs } from '~/types/auth';
+import { logger } from '~/utils/logger';
 
 export let authenticator = new Authenticator<any>();
 
@@ -52,6 +53,7 @@ authenticator.use(
     },
     async ({ tokens }: { tokens: any }) => {
       const { access_token } = tokens.data as { access_token: string };
+      logger.info(`Access token: ${access_token}`);
       const githubProfile = await fetchGitHubProfile(access_token);
       const { id, login, email, name } = githubProfile as {
         id: string;
