@@ -5,7 +5,7 @@ export async function fetchGitHubProfile(accessToken: string) {
   const response = await fetch('https://api.github.com/user', {
     headers: {
       Accept: 'application/vnd.github+json',
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ghu_RKUvAgOcIhkgRsGtKsJDxrjnpnJFNk1cLTbq`,
       'X-GitHub-Api-Version': '2022-11-28',
     },
   })
