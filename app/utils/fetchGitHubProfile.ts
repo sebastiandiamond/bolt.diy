@@ -9,7 +9,7 @@ export async function fetchGitHubProfile(accessToken: string) {
     },
   });
   logger.info(`GitHub profile response: ${response.json()}`);
-  if (!response.ok) {
+  if (response.status !== 200) {
     throw new Error('Failed to fetch GitHub profile');
   }
 
