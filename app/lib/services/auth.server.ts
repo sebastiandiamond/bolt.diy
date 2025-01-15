@@ -68,9 +68,9 @@ authenticator.use(
 authenticator.use(
   new OAuth2Strategy(
     {
-      clientId: "136077617825-a107rmc1iu6f52gcbi6auvhbkkp2a53v.apps.googleusercontent.com",
-      clientSecret: "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",
-      redirectURI: "http://localhost:5173/auth/google/callback",
+      clientId: "995042234478-h8mr2jbaeh1l074fm3qtbpfo6ugme820.apps.googleusercontent.com",
+      clientSecret: "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",
+      redirectURI: "https://bolt-diy-d74.pages.dev/auth/google/callback",
       authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
       tokenEndpoint: 'https://oauth2.googleapis.com/token',
       scopes: ['openid', 'email', 'profile'],
