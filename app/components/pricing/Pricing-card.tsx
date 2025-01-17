@@ -26,7 +26,7 @@ export default function PricingCard({ pricing, yearly }: { pricing: Pricing; yea
   };
 
   return (
-    <div className="border rounded-lg bg-bolt-elements-background-depth-2 border-bolt-elements-borderColor">
+    <div className="border rounded-lg bg-bolt-elements-background-depth-2 w-full border-bolt-elements-borderColor">
       <div className="flex flex-col gap-2.5 p-5.5 min-h-[132px] relative">
         <h1 className="text-2xl md:text-3xl text-bolt-elements-textPrimary">
           Pro
