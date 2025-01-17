@@ -9,7 +9,7 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Sign Up - Bolt' },
+    { title: 'Sign Up - XONO' },
     { name: 'description', content: 'Talk with Bolt, an AI assistant from StackBlitz' },
   ];
 };
@@ -67,10 +67,9 @@ export default function SignUpPage() {
       <div className="flex justify-center items-center flex-col gap-10 w-[344px]">
         <div className="flex flex-col gap-2 items-center">
           <h1 className="text-bolt-elements-textPrimary text-3xl font-semibold">Get Started</h1>
-          <p className="text-bolt-elements-textSecondary">Create your Bolt.diy account.</p>
+          <p className="text-bolt-elements-textSecondary">Create your XONO account.</p>
         </div>
         <div className="flex items-center flex-col gap-7 rounded-md flex items-center justify-center">
-          <AuthButton provider="github" icon="Github" />
           <AuthButton provider="google" icon="Google-login" />
           <span className="text-bolt-elements-textSecondary">- or -</span>
           <Form method="post" className="w-full">

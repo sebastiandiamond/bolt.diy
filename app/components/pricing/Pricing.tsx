@@ -18,33 +18,6 @@ const pricingData: Pricing[] = [
     annual: 216,
     priceId: 'price_1QhXKl6x8Ds2q65eCJE0DgB1',
   },
-  {
-    id: '2',
-    price: 50,
-    tokens: 28,
-    tokens_before: 25,
-    annual: 540,
-    description: 'Designed for professionals who need to use Bolt a few times per week.',
-    priceId: 'price_1QhXKl6x8Ds2q65eCJE0DgB1',
-  },
-  {
-    id: '3',
-    price: 100,
-    tokens: 55,
-    tokens_before: 50,
-    annual: 1080,
-    description: 'Designed for professionals who need to use Bolt a few times per week.',
-    priceId: 'price_1PbPqgKWfbR45IR7L4V0Y7RL',
-  },
-  {
-    id: '4',
-    price: 200,
-    tokens: 125,
-    tokens_before: 100,
-    annual: 2160,
-    description: 'Designed for professionals who need to use Bolt a few times per week.',
-    priceId: 'price_1PoXddLwHVywsqUKIaIych78',
-  },
 ];
 
 function PricingWindow({ pricingDialog, setPricingDialog }: PricingProps) {
@@ -63,10 +36,6 @@ function PricingWindow({ pricingDialog, setPricingDialog }: PricingProps) {
       >
         <div className="flex flex-col gap-5 items-center max-w-[580px] mx-auto mb-14">
           <h1 className="text-bolt-elements-textPrimary text-3xl md:text-5xl font-semibold">Pricing</h1>
-          <p className="text-bolt-elements-textSecondary text-center text-sm md:text-base">
-            Start with a free account to speed up your workflow on public projects or boost your entire team with
-            instantly-opening production environments.
-          </p>
         </div>
 
         <div className="mb-8">
@@ -79,14 +48,6 @@ function PricingWindow({ pricingDialog, setPricingDialog }: PricingProps) {
           {pricingData.map((pricing) => (
             <PricingCard key={pricing.id} pricing={pricing} yearly={yearly} />
           ))}
-        </div>
-        <div className="flex flex-col items-center text-sm">
-          <p className="mt-3 text-bolt-elements-textPrimary text-sm font-medium">
-            Looking for <span className="font-bold">Enterprise</span> plans?
-          </p>
-          <Link to="/enterprise" target="_blank" className="font-bold mt-1 text-bolt-elements-item-contentAccent">
-            Contact us for a quote
-          </Link>
         </div>
       </Dialog>
     </DialogRoot>

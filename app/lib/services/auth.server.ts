@@ -72,7 +72,7 @@ authenticator.use(
     {
       clientId: "995042234478-h8mr2jbaeh1l074fm3qtbpfo6ugme820.apps.googleusercontent.com",
       clientSecret: "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",
-      redirectURI: "https://bolt-diy-d74.pages.dev/auth/google/callback",
+      redirectURI: "https://xono.ai/auth/google/callback",
       authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
       tokenEndpoint: 'https://oauth2.googleapis.com/token',
       scopes: ['openid', 'email', 'profile'],

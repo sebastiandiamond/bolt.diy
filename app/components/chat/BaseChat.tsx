@@ -338,10 +338,10 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
             {!chatStarted && (
               <div id="intro" className="mt-[16vh] max-w-chat mx-auto text-center px-4 lg:px-0">
                 <h1 className="text-3xl lg:text-6xl font-bold text-bolt-elements-textPrimary mb-4 animate-fade-in">
-                  Where ideas begin
+                  Build your next App
                 </h1>
                 <p className="text-md lg:text-xl mb-8 text-bolt-elements-textSecondary animate-fade-in animation-delay-200">
-                  Bring ideas to life in seconds or get help on existing projects.
+                  Dream it, describe it, launch it — XONO turns your vision into reality with no coding or design expertise needed.
                 </p>
               </div>
             )}
@@ -539,7 +539,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                         minHeight: TEXTAREA_MIN_HEIGHT,
                         maxHeight: TEXTAREA_MAX_HEIGHT,
                       }}
-                      placeholder="How can Bolt help you today?"
+                      placeholder="Type your Idea…."
                       translate="no"
                     />
                     <ClientOnly>
@@ -644,9 +644,9 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
               onClose={handleSignInDialog}
               className="max-w-[600px] flex items-center justify-center flex-col p-8"
             >
-              <DialogTitle className="border-none text-xl pb-0">Continue with StackBlitz</DialogTitle>
+              <DialogTitle className="border-none text-xl pb-0">Continue with Xono</DialogTitle>
               <DialogDescription className="text-sm text-bolt-elements-textSecondary mb-2 pt-0">
-                To use Bolt you must log into an existing account or create one.
+                To use Xono you must log into an existing account or create one.
               </DialogDescription>
               <div className="flex flex-col gap-4">
                 <Link to="/sign-in">
@@ -660,9 +660,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                   </DialogButton>
                 </Link>
               </div>
-              <DialogDescription className="text-sm text-bolt-elements-textTertiary">
-                To use Bolt you must log into an existing account or create one.
-              </DialogDescription>
+
             </Dialog>
           </DialogRoot>
           <ClientOnly>{() => <Workbench chatStarted={chatStarted} isStreaming={isStreaming} />}</ClientOnly>

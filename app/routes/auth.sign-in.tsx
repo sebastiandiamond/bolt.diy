@@ -10,8 +10,8 @@ import fetch from 'node-fetch';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Sign In - Bolt' },
-    { name: 'description', content: 'Talk with Bolt, an AI assistant from StackBlitz' },
+    { title: 'Sign In - XONO' },
+    { name: 'description', content: 'Talk with XONO, an AI assistant' },
   ];
 };
 
@@ -57,7 +57,6 @@ export default function SignInPage() {
           </p>
         </div>
         <div className="flex items-center flex-col gap-7 rounded-md flex items-center justify-center ">
-          <AuthButton provider="github" icon="Github" />
           <AuthButton provider="google" icon="Google-login" />
           <span className="text-bolt-elements-textSecondary">- or -</span>
           <Form method="post" className="w-full">
