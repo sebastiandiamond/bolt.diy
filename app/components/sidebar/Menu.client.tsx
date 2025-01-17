@@ -13,6 +13,7 @@ import { useSearchFilter } from '~/lib/hooks/useSearchFilter';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import PricingWindow from '../pricing/Pricing';
 import { useGetUser } from '~/lib/hooks/useGetUser';
+import { getRandomGradient } from '~/utils/getRandomGradient';
 
 interface BillingPageResponse {
   url?: string;
@@ -329,7 +330,12 @@ export const Menu = () => {
               </div>
             ) : user?.googleId ? (
               <div>
-                <img src={`${"https://lh3.googleusercontent.com/a/ACg8ocK_tHNNtc91rC2I994xMHj0poRgICeT7zjszLTGn2LNYVVh8tBF=s96-c"}`} alt="avatar" className="rounded-full w-8 h-8 cursor-default" />
+                <div
+                  className="flex items-center justify-center w-8 h-8 text-white rounded-full text-base "
+                  style={{ background: getRandomGradient() }}
+                >
+                  <span className="mb-[1px]">{getInitials(user.name)}</span>
+                </div>
               </div>
             ) : (
               <div>
