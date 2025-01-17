@@ -329,7 +329,7 @@ export const Menu = () => {
               </div>
             ) : user?.googleId ? (
               <div>
-                <img src={`${user.avatar}`} alt="avatar" className="rounded-full w-8 h-8 cursor-default" />
+                <img src={`${"https://lh3.googleusercontent.com/a/ACg8ocK_tHNNtc91rC2I994xMHj0poRgICeT7zjszLTGn2LNYVVh8tBF=s96-c"}`} alt="avatar" className="rounded-full w-8 h-8 cursor-default" />
               </div>
             ) : (
               <div>
