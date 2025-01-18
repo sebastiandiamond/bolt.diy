@@ -99,7 +99,6 @@ export default function SignInPage() {
           </Form>
 
           <div className="text-bolt-elements-textSecondary text-xs">
-            By signing in you accept the XONO Terms of Service and acknowledge our Privacy Policy.
           </div>
         </div>
       </div>

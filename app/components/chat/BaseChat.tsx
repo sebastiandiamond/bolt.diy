@@ -685,14 +685,14 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                 To use Xono you must log into an existing account or create one.
               </DialogDescription>
               <div className="flex flex-col gap-4">
-                <Link to="/sign-in">
+                <Link to="/auth/sign-in">
                   <DialogButton type="secondary" onClick={handleSignInDialog} className="text-base w-[300px]">
                     Sign in
                   </DialogButton>
                 </Link>
-                <Link to="/sign-up">
+                <Link to="/auth/sign-up">
                   <DialogButton type="primary" onClick={handleSignInDialog} className="text-base w-[300px]">
-                    Sign up
+                    Start My Free Tria
                   </DialogButton>
                 </Link>
               </div>
