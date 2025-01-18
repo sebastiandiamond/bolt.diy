@@ -321,10 +321,6 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
     const [trialDialogOpen, setTrialDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-      setTrialDialogOpen(isTrialOver);
-    }, [isTrialOver]);
-
     const handleSignInDialog = () => {
       setDialogOpen(!dialogOpen);
     };
