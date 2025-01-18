@@ -7,12 +7,10 @@ import { getSession } from '~/lib/services/session.server';
 import AuthButton from '~/components/ui/AuthButton';
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare';
 import fetch from 'node-fetch';
+import { useEffect, useState } from 'react';
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: 'Sign In - XONO' },
-    { name: 'description', content: 'Talk with XONO, an AI assistant' },
-  ];
+  return [{ title: 'Sign In - XONO' }, { name: 'description', content: 'Talk with XONO, an AI assistant' }];
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -21,12 +19,15 @@ export const action: ActionFunction = async ({ request }) => {
   if (resp.email_username.error || resp.password?.error) {
     return resp;
   } else {
-    const response = await fetch(`https://bolt-api-o83q.onrender.com/api/v1/users?emailOrName=${encodeURIComponent(resp.email_username.value)}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
+    const response = await fetch(
+      `https://bolt-api-o83q.onrender.com/api/v1/users?emailOrName=${encodeURIComponent(resp.email_username.value)}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
     const user: any = await response.json();
 
     if (user && (await bcrypt.compare(resp.password.value, user.password || ''))) {
@@ -47,19 +48,29 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function SignInPage() {
   const actionData = useActionData<LoginFormInputs>();
+  const [loading, setLoading] = useState(false); // Add loading state
+
+  const handleSubmit = () => {
+    setLoading(true); // Set loading to true on submit
+  };
+
+  useEffect(() => {
+    if (actionData) {
+      setLoading(false); // Stop loading when actionData is received
+    }
+  }, [actionData]);
+
   return (
     <div className="pt-24 pb-10 min-h-screen bg-bolt-elements-background-depth-2 flex justify-center items-center">
       <div className="flex justify-center items-center flex-col gap-10 w-[344px]">
         <div className="flex flex-col gap-2 items-center">
           <h1 className="text-bolt-elements-textPrimary text-3xl font-semibold">Welcome back</h1>
-          <p className="text-bolt-elements-textSecondary">
-            Sign in to Bolt.diy with your GitHub, Google account or credentials.
-          </p>
+          <p className="text-bolt-elements-textSecondary">Sign in to XONO with your Google account or credentials.</p>
         </div>
         <div className="flex items-center flex-col gap-7 rounded-md flex items-center justify-center ">
           <AuthButton provider="google" icon="Google-login" />
           <span className="text-bolt-elements-textSecondary">- or -</span>
-          <Form method="post" className="w-full">
+          <Form method="post" className="w-full" onSubmit={handleSubmit}>
             <div className="w-full flex flex-col gap-2">
               <Input
                 placeholder="Email or Username"
@@ -71,8 +82,13 @@ export default function SignInPage() {
               <button
                 type="submit"
                 className="flex items-center gap-2 p-[13px] text-sm text-bolt-elements-textPrimary rounded-md w-full hover:bg-bolt-elements-background-depth-4 border border-bolt-elements-borderColor dark:bg-[#292d32] bg-bolt-elements-prompt-background justify-center"
+                disabled={loading}
               >
-                <span className="text-sm font-semibold">Sign In</span>
+                {loading ? (
+                  <span className="i-svg-spinners:90-ring-with-bg size-5"></span>
+                ) : (
+                  <span className="text-sm font-semibold">Sign In</span>
+                )}
               </button>
               <Link to="/auth/sign-up">
                 <p className="text-bolt-elements-textSecondary text-sm text-center underline">
@@ -83,7 +99,7 @@ export default function SignInPage() {
           </Form>
 
           <div className="text-bolt-elements-textSecondary text-xs">
-            By signing in you accept the Bolt.diy Terms of Service and acknowledge our Privacy Policy.
+            By signing in you accept the XONO Terms of Service and acknowledge our Privacy Policy.
           </div>
         </div>
       </div>

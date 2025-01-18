@@ -5,7 +5,7 @@
 import type { Message } from 'ai';
 import React, { type RefCallback, useCallback, useEffect, useState } from 'react';
 import { ClientOnly } from 'remix-utils/client-only';
-import { Menu } from '~/components/sidebar/Menu.client';
+import { Menu, type StripeResponse } from '~/components/sidebar/Menu.client';
 import { IconButton } from '~/components/ui/IconButton';
 import { Workbench } from '~/components/workbench/Workbench.client';
 import { classNames } from '~/utils/classNames';
@@ -35,6 +35,7 @@ import { LLMManager } from '~/lib/modules/llm/manager';
 import { Dialog, DialogButton, DialogDescription, DialogRoot, DialogTitle } from '~/components/ui/Dialog';
 import { Link } from '@remix-run/react';
 import { useGetUser } from '~/lib/hooks/useGetUser';
+import { useHandleFreeTrial } from '~/utils/handlefreetrial';
 
 const TEXTAREA_MIN_HEIGHT = 76;
 
@@ -314,8 +315,15 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
         }
       }
     };
-
+    const { user } = useGetUser();
+    const isTrialOver = useHandleFreeTrial(user);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [trialDialogOpen, setTrialDialogOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+      setTrialDialogOpen(isTrialOver);
+    }, [isTrialOver]);
 
     const handleSignInDialog = () => {
       setDialogOpen(!dialogOpen);
@@ -323,8 +331,25 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
     const handleSignUpDialog = () => {
       setDialogOpen(!dialogOpen);
     };
+    const handleTrialDialog = () => {
+      setTrialDialogOpen(!trialDialogOpen);
+    };
 
-    const { user } = useGetUser();
+    const handleUpgrade = async () => {
+      setLoading(true);
+      const response = await fetch('https://bolt-api-o83q.onrender.com/api/v1/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ priceId: 'price_1QhXKl6x8Ds2q65eCJE0DgB1', userId: user?.id }),
+      });
+
+      const data: StripeResponse = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error(data.error);
+      }
+    };
 
     const baseChat = (
       <div
@@ -341,7 +366,8 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                   Build your next App
                 </h1>
                 <p className="text-md lg:text-xl mb-8 text-bolt-elements-textSecondary animate-fade-in animation-delay-200">
-                  Dream it, describe it, launch it — XONO turns your vision into reality with no coding or design expertise needed.
+                  Dream it, describe it, launch it — XONO turns your vision into reality with no coding or design
+                  expertise needed.
                 </p>
               </div>
             )}
@@ -517,6 +543,11 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                             return;
                           }
 
+                          if (isTrialOver) {
+                            setTrialDialogOpen(true);
+                            return;
+                          }
+
                           if (isStreaming) {
                             handleStop?.();
                             return;
@@ -557,6 +588,11 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                               setDialogOpen(true);
                               return;
                             }
+                            if (isTrialOver) {
+                              setTrialDialogOpen(true);
+                              return;
+                            }
+
                             if (input.length > 0 || uploadedFiles.length > 0) {
                               handleSendMessage?.(event);
                             }
@@ -660,7 +696,30 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                   </DialogButton>
                 </Link>
               </div>
-
+            </Dialog>
+          </DialogRoot>
+          <DialogRoot open={trialDialogOpen}>
+            <Dialog
+              onBackdrop={handleTrialDialog}
+              onClose={handleTrialDialog}
+              className="max-w-[600px] flex items-center justify-center flex-col p-8"
+            >
+              <DialogTitle className="border-none text-xl pb-0">Your free trial is over</DialogTitle>
+              <DialogDescription className="text-sm text-bolt-elements-textSecondary mb-2 pt-0">
+                Your free trial is over. Please upgrade to Pro to continue using Xono.
+              </DialogDescription>
+              <div className="flex flex-col gap-4">
+                <DialogButton type="secondary" onClick={handleTrialDialog} className="text-base w-[300px]">
+                  Cancel
+                </DialogButton>
+                <DialogButton type="primary" onClick={handleUpgrade} className="text-base w-[300px]">
+                  {loading ? (
+                    <div className="i-svg-spinners:90-ring-with-bg text-bolt-elements-loader-progress text-xl animate-spin"></div>
+                  ) : (
+                    'Upgrade to Pro'
+                  )}
+                </DialogButton>
+              </div>
             </Dialog>
           </DialogRoot>
           <ClientOnly>{() => <Workbench chatStarted={chatStarted} isStreaming={isStreaming} />}</ClientOnly>

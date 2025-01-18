@@ -1,17 +1,10 @@
 import { Link } from '@remix-run/react';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 
-function HeaderLoginButtons({ user }: any) {
-  const [showButtons, setShowButtons] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowButtons(true);
-    }, 500);
+function HeaderLoginButtons() {
+  const userId = localStorage.getItem('userId');
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!user && showButtons) {
+  if (!userId) {
     return (
       <Fragment>
         <div className="flex gap-2">

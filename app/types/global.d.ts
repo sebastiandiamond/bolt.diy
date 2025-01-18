@@ -40,5 +40,7 @@ interface User {
     currentPeriodStart: string;
     endedAt: string | null;
     planType: string;
+    status: string;
+    currentPeriodStart: string;
   };
 }

@@ -15,7 +15,7 @@ import PricingWindow from '../pricing/Pricing';
 import { useGetUser } from '~/lib/hooks/useGetUser';
 import { getRandomGradient } from '~/utils/getRandomGradient';
 
-interface BillingPageResponse {
+export interface StripeResponse {
   url?: string;
   error?: string;
 }
@@ -157,6 +157,23 @@ export const Menu = () => {
     setPricingDialog(true);
     window.history.pushState(null, '', '/?showPricing=true');
   };
+
+  const handleSubscribe = async () => {
+    setLoading(true);
+    const response = await fetch('https://bolt-api-o83q.onrender.com/api/v1/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ priceId: 'price_1QhXKl6x8Ds2q65eCJE0DgB1', userId: user?.id }),
+    });
+
+    const data: StripeResponse = await response.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      console.error(data.error);
+    }
+  };
+
   const handleBillingPage = async () => {
     setLoading(true);
     const response = await fetch('https://bolt-api-o83q.onrender.com/api/v1/billing', {
@@ -165,7 +182,7 @@ export const Menu = () => {
       body: JSON.stringify({ userId: user?.id }),
     });
 
-    const data: BillingPageResponse = await response.json();
+    const data: StripeResponse = await response.json();
     if (data.url) {
       window.location.href = data.url;
     } else {
@@ -286,10 +303,12 @@ export const Menu = () => {
 
           <div
             className="flex items-center gap-2 text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive cursor-pointer p-2 rounded-md relative"
-            onClick={user?.subscription ? handleBillingPage : handlePricingDialogOpen}
+            onClick={user?.subscription ? handleBillingPage : handleSubscribe}
           >
             <span className="i-ph:credit-card text-xl" />
-            <p className="text-bolt-elements-textPrimary text-sm font-medium">My Subscription</p>
+            <p className="text-bolt-elements-textPrimary text-sm font-medium">
+              {user?.subscription ? 'My Subscription' : 'Upgrade to Pro'}
+            </p>
             {loading && <span className="absolute right-2 h-full  i-svg-spinners:90-ring-with-bg size-4"></span>}
           </div>
           <DialogRoot open={dialogOpen}>
@@ -351,7 +370,7 @@ export const Menu = () => {
             <div>
               <p className="text-bolt-elements-textPrimary text-sm font-medium">{user?.name}</p>
               <p className="text-bolt-elements-textSecondary text-sm font-regular capitalize">
-                {user?.subscription?.planType ? user?.subscription?.planType : 'Personal'} Plan
+                {user?.subscription?.planType ? user?.subscription?.planType : 'Trial'} Plan
               </p>
             </div>
           </div>

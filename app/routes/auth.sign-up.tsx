@@ -6,6 +6,7 @@ import type { FormInputs } from '~/types/auth';
 import { getRandomGradient } from '~/utils/getRandomGradient';
 import AuthButton from '~/components/ui/AuthButton';
 import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare';
+import { useEffect, useState } from 'react';
 
 export const meta: MetaFunction = () => {
   return [
@@ -61,7 +62,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function SignUpPage() {
   const actionData = useActionData<FormInputs>();
+  const [loading, setLoading] = useState(false);
 
+  const handleSubmit = () => {
+    setLoading(true);
+  };
+
+  useEffect(() => {
+    if (actionData) {
+      setLoading(false);
+    }
+  }, [actionData]);
   return (
     <div className="pt-24 pb-10 min-h-screen bg-bolt-elements-background-depth-2 flex justify-center items-center">
       <div className="flex justify-center items-center flex-col gap-10 w-[344px]">
@@ -72,7 +83,7 @@ export default function SignUpPage() {
         <div className="flex items-center flex-col gap-7 rounded-md flex items-center justify-center">
           <AuthButton provider="google" icon="Google-login" />
           <span className="text-bolt-elements-textSecondary">- or -</span>
-          <Form method="post" className="w-full">
+          <Form method="post" className="w-full" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
               <Input placeholder="Email" id="email" name="email" type="email" error={actionData?.email.error} />
               <Input placeholder="Username" id="username" name="username" error={actionData?.username.error} />
@@ -94,8 +105,13 @@ export default function SignUpPage() {
               <button
                 type="submit"
                 className="flex items-center gap-2 p-[13px] text-sm text-bolt-elements-textPrimary rounded-md w-full hover:bg-bolt-elements-background-depth-4 border border-bolt-elements-borderColor dark:bg-[#292d32] bg-bolt-elements-prompt-background justify-center"
+                disabled={loading}
               >
-                <span className="text-sm font-semibold">Sign Up</span>
+                {loading ? (
+                  <span className="i-svg-spinners:90-ring-with-bg size-5"></span>
+                ) : (
+                  <span className="text-sm font-semibold">Sign Up</span>
+                )}
               </button>
               <Link to="/auth/sign-in">
                 <p className="text-bolt-elements-textSecondary text-sm text-center underline">
@@ -106,7 +122,7 @@ export default function SignUpPage() {
           </Form>
 
           <div className="text-bolt-elements-textSecondary text-xs">
-            By signing in you accept the Bolt.diy Terms of Service and acknowledge our Privacy Policy.
+            By signing in you accept the XONO Terms of Service and acknowledge our Privacy Policy.
           </div>
         </div>
       </div>
