@@ -163,7 +163,7 @@ export const Menu = () => {
     const response = await fetch('https://bolt-api-o83q.onrender.com/api/v1/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ priceId: 'price_1QhXKl6x8Ds2q65eCJE0DgB1', userId: user?.id }),
+      body: JSON.stringify({ priceId: 'price_1QivPeGKk03tzX1IY1VJRYmn', userId: user?.id }),
     });
 
     const data: StripeResponse = await response.json();
