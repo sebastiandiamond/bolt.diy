@@ -16,7 +16,7 @@ const pricingData: Pricing[] = [
     tokens: 10,
     description: 'Ideal for hobbyists and casual users for light, exploratory use.',
     annual: 216,
-    priceId: 'price_1QhXKl6x8Ds2q65eCJE0DgB1',
+    priceId: 'price_1QivPeGKk03tzX1IY1VJRYmn',
   },
 ];
 

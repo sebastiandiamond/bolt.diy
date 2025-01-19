@@ -69,7 +69,7 @@ export default function SignInPage() {
         </div>
         <div className="flex items-center flex-col gap-7 rounded-md flex items-center justify-center ">
           <AuthButton provider="google" icon="Google-login" />
-          <span className="text-bolt-elements-textSecondary">- or -</span>
+          {/* <span className="text-bolt-elements-textSecondary">- or -</span>
           <Form method="post" className="w-full" onSubmit={handleSubmit}>
             <div className="w-full flex flex-col gap-2">
               <Input
@@ -96,7 +96,7 @@ export default function SignInPage() {
                 </p>
               </Link>
             </div>
-          </Form>
+          </Form> */}
 
           <div className="text-bolt-elements-textSecondary text-xs">
           </div>

@@ -82,8 +82,8 @@ export default function SignUpPage() {
         </div>
         <div className="flex items-center flex-col gap-7 rounded-md flex items-center justify-center">
           <AuthButton provider="google" icon="Google-login" />
-          <span className="text-bolt-elements-textSecondary">- or -</span>
-          <Form method="post" className="w-full" onSubmit={handleSubmit}>
+          {/* <span className="text-bolt-elements-textSecondary">- or -</span> */}
+          {/* <Form method="post" className="w-full" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
               <Input placeholder="Email" id="email" name="email" type="email" error={actionData?.email.error} />
               <Input placeholder="Username" id="username" name="username" error={actionData?.username.error} />
@@ -119,7 +119,7 @@ export default function SignUpPage() {
                 </p>
               </Link>
             </div>
-          </Form>
+          </Form> */}
 
           <div className="text-bolt-elements-textSecondary text-xs">
           </div>
