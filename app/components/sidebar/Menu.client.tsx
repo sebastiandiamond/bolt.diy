@@ -303,7 +303,7 @@ export const Menu = () => {
 
           <div
             className="flex items-center gap-2 text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive cursor-pointer p-2 rounded-md relative"
-            onClick={user?.subscription?.planType === 'trialing' ? handleSubscribe : handleBillingPage}
+            onClick={user?.subscription?.status === 'trialing' ? handleSubscribe : handleBillingPage}
           >
             <span className="i-ph:credit-card text-xl" />
             <p className="text-bolt-elements-textPrimary text-sm font-medium">
