@@ -307,7 +307,7 @@ export const Menu = () => {
           >
             <span className="i-ph:credit-card text-xl" />
             <p className="text-bolt-elements-textPrimary text-sm font-medium">
-              {user?.subscription ? 'My Subscription' : 'Upgrade to Pro'}
+              {user?.subscription?.status === 'trialing' ? 'Upgrade to Pro' : 'My Subscription'}
             </p>
             {loading && <span className="absolute right-2 h-full  i-svg-spinners:90-ring-with-bg size-4"></span>}
           </div>
