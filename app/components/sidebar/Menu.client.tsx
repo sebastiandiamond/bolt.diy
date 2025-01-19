@@ -303,11 +303,11 @@ export const Menu = () => {
 
           <div
             className="flex items-center gap-2 text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive cursor-pointer p-2 rounded-md relative"
-            onClick={user?.subscription ? handleBillingPage : handleSubscribe}
+            onClick={user?.subscription?.status === 'trialing' ? handleSubscribe : handleBillingPage}
           >
             <span className="i-ph:credit-card text-xl" />
             <p className="text-bolt-elements-textPrimary text-sm font-medium">
-              {user?.subscription ? 'My Subscription' : 'Upgrade to Pro'}
+              {user?.subscription?.status === 'trialing' ? 'Upgrade to Pro' : 'My Subscription'}
             </p>
             {loading && <span className="absolute right-2 h-full  i-svg-spinners:90-ring-with-bg size-4"></span>}
           </div>
