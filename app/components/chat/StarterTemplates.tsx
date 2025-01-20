@@ -1,3 +1,4 @@
+import { Link } from '@remix-run/react';
 import React from 'react';
 import type { Template } from '~/types/template';
 import { STARTER_TEMPLATES } from '~/utils/constants';
@@ -22,7 +23,9 @@ const FrameworkLink: React.FC<FrameworkLinkProps> = ({ template }) => (
 const StarterTemplates: React.FC = () => {
   return (
     <div className="flex flex-col items-center gap-4">
-      <span className="text-sm text-gray-500">or start a blank app with your favorite stack</span>
+      <span className="text-base text-gray-400">
+        <Link to="/privacy-policy">Privacy Policy</Link> - <Link to="/terms-of-service">Terms of Service</Link>
+      </span>
       <div className="flex justify-center">
         <div className="flex w-70 flex-wrap items-center justify-center gap-4">
           {STARTER_TEMPLATES.map((template) => (
