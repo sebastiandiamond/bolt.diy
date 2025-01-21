@@ -688,7 +688,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                 </Link>
                 <Link to="/auth/sign-up">
                   <DialogButton type="primary" onClick={handleSignInDialog} className="text-base w-[300px]">
-                    Start My Free Tria
+                    Start your Free Trial
                   </DialogButton>
                 </Link>
               </div>

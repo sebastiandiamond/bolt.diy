@@ -9,7 +9,7 @@ interface AuthButtonProps {
 export default function AuthButton({ provider, icon }: AuthButtonProps) {
   const [loading, setLoading] = useState(false);
   return (
-    <Form action={`/auth/${provider}`} method="post" className="w-full">
+    <Form action={`/auth/${provider}`} method="post" className="max-w-[300px] w-full">
       <button
         className={`flex border border-accent-600 items-center gap-2 p-[13px] text-sm text-bolt-elements-textPrimary rounded-md w-full  justify-center relative ${loading ? ' border-bolt-elements-borderColor dark:bg-[#292d32] bg-bolt-elements-prompt-background' : 'bg-accent-600'}`}
         disabled={loading}

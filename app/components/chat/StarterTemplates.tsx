@@ -26,6 +26,7 @@ const StarterTemplates: React.FC = () => {
       <span className="text-base text-gray-400">
         <Link to="/privacy-policy">Privacy Policy</Link> - <Link to="/terms-of-service">Terms of Service</Link>
       </span>
+      <span className="text-base text-gray-400">hello@xono.ai</span>
       <div className="flex justify-center">
         <div className="flex w-70 flex-wrap items-center justify-center gap-4">
           {STARTER_TEMPLATES.map((template) => (

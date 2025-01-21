@@ -18,7 +18,7 @@ function HeaderLoginButtons() {
             to="/auth/sign-up"
             className="text-bolt-elements-textPrimary px-[16px] py-[6px] rounded-md text-xs bg-[#9E0DE1]"
           >
-            Get Started
+            Start your Free Trial
           </Link>
         </div>
       </Fragment>

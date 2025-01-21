@@ -65,41 +65,11 @@ export default function SignInPage() {
       <div className="flex justify-center items-center flex-col gap-10 w-[344px]">
         <div className="flex flex-col gap-2 items-center">
           <h1 className="text-bolt-elements-textPrimary text-3xl font-semibold">Welcome back</h1>
-          <p className="text-bolt-elements-textSecondary">Sign in to XONO with your Google account or credentials.</p>
+          <p className="text-bolt-elements-textSecondary">Sign in to XONO with your Google account.</p>
         </div>
-        <div className="flex items-center flex-col gap-7 rounded-md flex items-center justify-center ">
+        <div className="flex items-center flex-col gap-7 rounded-md flex items-center justify-center w-full">
           <AuthButton provider="google" icon="Google-login" />
-          {/* <span className="text-bolt-elements-textSecondary">- or -</span>
-          <Form method="post" className="w-full" onSubmit={handleSubmit}>
-            <div className="w-full flex flex-col gap-2">
-              <Input
-                placeholder="Email or Username"
-                id="email_username"
-                name="email_username"
-                error={actionData?.email_username.error}
-              />
-              <Input placeholder="Password" id="password" name="password" error={actionData?.password.error} />
-              <button
-                type="submit"
-                className="flex items-center gap-2 p-[13px] text-sm text-bolt-elements-textPrimary rounded-md w-full hover:bg-bolt-elements-background-depth-4 border border-bolt-elements-borderColor dark:bg-[#292d32] bg-bolt-elements-prompt-background justify-center"
-                disabled={loading}
-              >
-                {loading ? (
-                  <span className="i-svg-spinners:90-ring-with-bg size-5"></span>
-                ) : (
-                  <span className="text-sm font-semibold">Sign In</span>
-                )}
-              </button>
-              <Link to="/auth/sign-up">
-                <p className="text-bolt-elements-textSecondary text-sm text-center underline">
-                  Don't have an account? Sign Up.
-                </p>
-              </Link>
-            </div>
-          </Form> */}
-
-          <div className="text-bolt-elements-textSecondary text-xs">
-          </div>
+          <div className="text-bolt-elements-textSecondary text-xs"></div>
         </div>
       </div>
     </div>

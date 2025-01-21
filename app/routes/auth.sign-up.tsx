@@ -9,10 +9,7 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/cloudflare';
 import { useEffect, useState } from 'react';
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: 'Sign Up - XONO' },
-    { name: 'description', content: 'Talk with Bolt, an AI assistant from StackBlitz' },
-  ];
+  return [{ title: 'Sign Up - XONO' }, { name: 'description', content: 'Talk with XONO, an AI assistant' }];
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -78,51 +75,12 @@ export default function SignUpPage() {
       <div className="flex justify-center items-center flex-col gap-10 w-[344px]">
         <div className="flex flex-col gap-2 items-center">
           <h1 className="text-bolt-elements-textPrimary text-3xl font-semibold">Get Started</h1>
-          <p className="text-bolt-elements-textSecondary">Create your XONO account.</p>
+          <p className="text-bolt-elements-textSecondary">Create your Free XONO trial account.</p>
+          <p className="text-bolt-elements-textSecondary">No Credit Card needed!</p>
         </div>
-        <div className="flex items-center flex-col gap-7 rounded-md flex items-center justify-center">
+        <div className="flex items-center flex-col gap-7 rounded-md flex items-center justify-center w-full">
           <AuthButton provider="google" icon="Google-login" />
-          {/* <span className="text-bolt-elements-textSecondary">- or -</span> */}
-          {/* <Form method="post" className="w-full" onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-2">
-              <Input placeholder="Email" id="email" name="email" type="email" error={actionData?.email.error} />
-              <Input placeholder="Username" id="username" name="username" error={actionData?.username.error} />
-              <Input
-                placeholder="Password"
-                id="password"
-                name="password"
-                type="password"
-                error={actionData?.password.error}
-              />
-              <Input
-                placeholder="Confirm Password"
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                error={actionData?.confirmPassword.error}
-              />
-
-              <button
-                type="submit"
-                className="flex items-center gap-2 p-[13px] text-sm text-bolt-elements-textPrimary rounded-md w-full hover:bg-bolt-elements-background-depth-4 border border-bolt-elements-borderColor dark:bg-[#292d32] bg-bolt-elements-prompt-background justify-center"
-                disabled={loading}
-              >
-                {loading ? (
-                  <span className="i-svg-spinners:90-ring-with-bg size-5"></span>
-                ) : (
-                  <span className="text-sm font-semibold">Sign Up</span>
-                )}
-              </button>
-              <Link to="/auth/sign-in">
-                <p className="text-bolt-elements-textSecondary text-sm text-center underline">
-                  Have an account? Sign In.
-                </p>
-              </Link>
-            </div>
-          </Form> */}
-
-          <div className="text-bolt-elements-textSecondary text-xs">
-          </div>
+          <div className="text-bolt-elements-textSecondary text-xs"></div>
         </div>
       </div>
     </div>
