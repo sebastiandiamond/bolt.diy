@@ -5,7 +5,9 @@ import tailwindReset from '@unocss/reset/tailwind-compat.css?url';
 import { themeStore } from './lib/stores/theme';
 import { stripIndents } from './utils/stripIndent';
 import { createHead } from 'remix-island';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { isSafari } from './utils/browser';
+import SafariWarning from './components/SafariWarning';
 
 import reactToastifyStyles from 'react-toastify/dist/ReactToastify.css?url';
 import globalStyles from './styles/index.scss?url';
@@ -82,6 +84,7 @@ import { logStore } from './lib/stores/logs';
 
 export default function App() {
   const theme = useStore(themeStore);
+  const [showSafariWarning, setShowSafariWarning] = useState(false);
 
   useEffect(() => {
     logStore.logSystem('Application initialized', {
@@ -90,7 +93,13 @@ export default function App() {
       userAgent: navigator.userAgent,
       timestamp: new Date().toISOString(),
     });
+
+    setShowSafariWarning(isSafari());
   }, []);
+
+  if (showSafariWarning) {
+    return <SafariWarning />;
+  }
 
   return (
     <Layout>
